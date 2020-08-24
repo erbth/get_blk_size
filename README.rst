@@ -1,1 +1,1 @@
-Get a block device's logical block size on linux.
+Get a block device's logical- and physical block size on linux.

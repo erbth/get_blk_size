@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	size_t blk_size;
+	size_t blk_size, pblk_size;
 
 	int ret = ioctl(fd, BLKBSZGET, &blk_size);
 	if (ret != 0)
@@ -35,8 +35,17 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	ret = ioctl(fd, BLKPBSZGET, &pblk_size);
+	if (ret != 0)
+	{
+		perror("IOCTL failed");
+		close(fd);
+		return 1;
+	}
+
 	close(fd);
 
-	printf ("%d\n", (int) blk_size);
+	printf ("logical block size: %d, physical block size: %d\n",
+			(int) blk_size, (int) pblk_size);
 	return 0;
 }
